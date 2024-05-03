@@ -6,8 +6,10 @@ use App\Repository\ResidenceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ResidenceRepository::class)]
+#[UniqueEntity(fields: ['name', 'city', 'street'])] 
 class Residence
 {
     #[ORM\Id]

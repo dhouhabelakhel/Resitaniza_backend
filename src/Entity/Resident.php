@@ -54,7 +54,9 @@ class Resident implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->id;
     }
-
+public Function setId(int $id){
+$this->id=$id;
+}
     public function getEmail(): ?string
     {
         return $this->email;
@@ -87,7 +89,12 @@ class Resident implements UserInterface, PasswordAuthenticatedUserInterface
        return $this->roles;
        
     }
-
+    public function setRole(string $role)
+    {
+        if (!in_array($role, $this->roles)) {
+            $this->roles[] = $role;
+        }
+    }
   
 
     /**
