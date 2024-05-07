@@ -35,23 +35,23 @@ class AuthController extends AbstractController
         $this->passwordEncoder = $passwordHasher;
 
     }
-    #[Route('/testauth', name: 'app_testauth',methods: [ 'POST'])]
-public function testauth(Request $req){
-    $credentials = json_decode($req->getContent(), true);
-    $userRole = $this->getUserRoleByEmail($credentials['email']);
-    $user =$this->doctrine->getRepository('App\Entity\\' . ucfirst($userRole))
-    ->findOneBy(['email' => $credentials['email']]);
-   $test= $this->isValidPassword($user, $credentials['password'],$userRole,$credentials['email']);
-   $newuser=new Resident();
+//     #[Route('/testauth', name: 'app_testauth',methods: [ 'POST'])]
+// public function testauth(Request $req){
+//     $credentials = json_decode($req->getContent(), true);
+//     $userRole = $this->getUserRoleByEmail($credentials['email']);
+//     $user =$this->doctrine->getRepository('App\Entity\\' . ucfirst($userRole))
+//     ->findOneBy(['email' => $credentials['email']]);
+//    $test= $this->isNotValidPassword($user, $credentials['password'],$userRole,$credentials['email']);
+//    $newuser=new Resident();
 
-   $data = [
-       'id' => $user->getId(),
-       'email' => $user->getEmail(),
-       'role' => $userRole
-   ];
-   $newuser->setId($data['id']);
-return $this->json($newuser->getId());
-}
+//    $data = [
+//        'id' => $user->getId(),
+//        'email' => $user->getEmail(),
+//        'role' => $userRole
+//    ];
+//    $newuser->setId($data['id']);
+// return $this->json($newuser->getId());
+// }
     #[Route('/auth', name: 'app_auth',methods: [ 'POST'])]
 
     public function login(Request $request): JsonResponse
@@ -71,13 +71,13 @@ return $this->json($newuser->getId());
         $user =$this->doctrine->getRepository('App\Entity\\' . ucfirst($userRole))
             ->findOneBy(['email' => $credentials['email']]);
 
-        if (!$user || !$this->isValidPassword($user, $credentials['password'],$userRole,$credentials['email'])) {
+        if (!$user || $this->isNotValidPassword($user, $credentials['password'],$userRole,$credentials['email'])) {
             return new JsonResponse(['error' => 'invalid password'], JsonResponse::HTTP_NOT_FOUND);
 
         
         }
 
-        $token = $this->jwtManager->create($user);
+        $token = $this->jwtManager->create($user,$user->getEmail());
 
         return new JsonResponse(['token' => $token]);
     }
@@ -101,7 +101,7 @@ return $this->json($newuser->getId());
 
         return null;
     }
-    private function isValidPassword(UserInterface $user, string $password,$userType,$email): bool
+    private function isNotValidPassword(UserInterface $user, string $password,$userType,$email): bool
     {
         switch ($userType) {
             case 'Resident':
