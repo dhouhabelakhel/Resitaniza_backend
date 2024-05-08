@@ -38,9 +38,16 @@ class Residence
     #[ORM\OneToMany(targetEntity: Bloc::class, mappedBy: 'residence_id', orphanRemoval: true)]
     private Collection $blocs;
 
+    /**
+     * @var Collection<int, MangerResidence>
+     */
+    #[ORM\OneToMany(targetEntity: MangerResidence::class, mappedBy: 'residence_id')]
+    private Collection $mangerResidences;
+
     public function __construct()
     {
         $this->blocs = new ArrayCollection();
+        $this->mangerResidences = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -132,6 +139,36 @@ class Residence
             // set the owning side to null (unless already changed)
             if ($bloc->getResidenceId() === $this) {
                 $bloc->setResidenceId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MangerResidence>
+     */
+    public function getMangerResidences(): Collection
+    {
+        return $this->mangerResidences;
+    }
+
+    public function addMangerResidence(MangerResidence $mangerResidence): static
+    {
+        if (!$this->mangerResidences->contains($mangerResidence)) {
+            $this->mangerResidences->add($mangerResidence);
+            $mangerResidence->setResidenceId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMangerResidence(MangerResidence $mangerResidence): static
+    {
+        if ($this->mangerResidences->removeElement($mangerResidence)) {
+            // set the owning side to null (unless already changed)
+            if ($mangerResidence->getResidenceId() === $this) {
+                $mangerResidence->setResidenceId(null);
             }
         }
 

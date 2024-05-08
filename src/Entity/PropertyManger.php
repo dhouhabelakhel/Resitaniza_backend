@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PropertyMangerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -51,6 +53,17 @@ class PropertyManger implements UserInterface, PasswordAuthenticatedUserInterfac
 
     #[ORM\Column(length: 255)]
     private ?string $phonenumber = null;
+
+    /**
+     * @var Collection<int, MangerResidence>
+     */
+    #[ORM\OneToMany(targetEntity: MangerResidence::class, mappedBy: 'manager_id')]
+    private Collection $mangerResidences;
+
+    public function __construct()
+    {
+        $this->mangerResidences = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -182,6 +195,36 @@ class PropertyManger implements UserInterface, PasswordAuthenticatedUserInterfac
     public function setPhonenumber(string $phonenumber): static
     {
         $this->phonenumber = $phonenumber;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MangerResidence>
+     */
+    public function getMangerResidences(): Collection
+    {
+        return $this->mangerResidences;
+    }
+
+    public function addMangerResidence(MangerResidence $mangerResidence): static
+    {
+        if (!$this->mangerResidences->contains($mangerResidence)) {
+            $this->mangerResidences->add($mangerResidence);
+            $mangerResidence->setManagerId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMangerResidence(MangerResidence $mangerResidence): static
+    {
+        if ($this->mangerResidences->removeElement($mangerResidence)) {
+            // set the owning side to null (unless already changed)
+            if ($mangerResidence->getManagerId() === $this) {
+                $mangerResidence->setManagerId(null);
+            }
+        }
 
         return $this;
     }

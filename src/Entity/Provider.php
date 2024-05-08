@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProviderRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -60,6 +62,17 @@ class Provider implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $street = null;
+
+    /**
+     * @var Collection<int, OfferService>
+     */
+    #[ORM\OneToMany(targetEntity: OfferService::class, mappedBy: 'provider')]
+    private Collection $offerServices;
+
+    public function __construct()
+    {
+        $this->offerServices = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -237,6 +250,36 @@ class Provider implements UserInterface, PasswordAuthenticatedUserInterface
     public function setStreet(string $street): static
     {
         $this->street = $street;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OfferService>
+     */
+    public function getOfferServices(): Collection
+    {
+        return $this->offerServices;
+    }
+
+    public function addOfferService(OfferService $offerService): static
+    {
+        if (!$this->offerServices->contains($offerService)) {
+            $this->offerServices->add($offerService);
+            $offerService->setProvider($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOfferService(OfferService $offerService): static
+    {
+        if ($this->offerServices->removeElement($offerService)) {
+            // set the owning side to null (unless already changed)
+            if ($offerService->getProvider() === $this) {
+                $offerService->setProvider(null);
+            }
+        }
 
         return $this;
     }
