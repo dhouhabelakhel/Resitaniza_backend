@@ -27,7 +27,7 @@ class PropertyMangerController extends AbstractController
     #[Route('/new', name: 'app_manger_new', methods: [ 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager,SerializerInterface $serializer,
     UrlGeneratorInterface $urlGenerator,UserPasswordHasherInterface $hasher)
-    {try {
+    {
         $manger = $serializer->deserialize($request->getContent(), PropertyManger::class, 'json');
     
         $hashedPassword = $hasher->hashPassword($manger, $manger->getPassword());
@@ -36,13 +36,9 @@ class PropertyMangerController extends AbstractController
         $entityManager->persist($manger);
         $entityManager->flush();
     
-        $jsonmanger = $serializer->serialize($manger, 'json', ['groups' => 'getmangers']);
         
         return $this->json($manger, JsonResponse::HTTP_CREATED);
-    } catch (\Throwable $th) {
-        return $this->json($th,JsonResponse::HTTP_BAD_REQUEST);
-
-    }
+   
         
 
     }

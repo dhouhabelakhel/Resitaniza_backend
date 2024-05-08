@@ -54,16 +54,16 @@ class PropertyManger implements UserInterface, PasswordAuthenticatedUserInterfac
     #[ORM\Column(length: 255)]
     private ?string $phonenumber = null;
 
-    /**
-     * @var Collection<int, MangerResidence>
-     */
-    #[ORM\OneToMany(targetEntity: MangerResidence::class, mappedBy: 'manager_id')]
-    private Collection $mangerResidences;
+    // /**
+    //  * @var Collection<int, MangerResidence>
+    //  */
+    // #[ORM\OneToMany(targetEntity: MangerResidence::class, mappedBy: 'manager_id')]
+    // private Collection $mangerResidences;
 
-    public function __construct()
-    {
-        $this->mangerResidences = new ArrayCollection();
-    }
+    // public function __construct()
+    // {
+    //     $this->mangerResidences = new ArrayCollection();
+    // }
 
     public function getId(): ?int
     {
@@ -199,33 +199,33 @@ class PropertyManger implements UserInterface, PasswordAuthenticatedUserInterfac
         return $this;
     }
 
-    /**
-     * @return Collection<int, MangerResidence>
-     */
-    public function getMangerResidences(): Collection
-    {
-        return $this->mangerResidences;
-    }
+    // /**
+    //  * @return Collection<int, MangerResidence>
+    //  */
+    // public function getMangerResidences(): Collection
+    // {
+    //     return $this->mangerResidences;
+    // }
 
-    public function addMangerResidence(MangerResidence $mangerResidence): static
-    {
-        if (!$this->mangerResidences->contains($mangerResidence)) {
-            $this->mangerResidences->add($mangerResidence);
-            $mangerResidence->setManagerId($this);
-        }
+    // public function addMangerResidence(MangerResidence $mangerResidence): static
+    // {
+    //     if (!$this->mangerResidences->contains($mangerResidence)) {
+    //         $this->mangerResidences->add($mangerResidence);
+    //         $mangerResidence->setManagerId($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeMangerResidence(MangerResidence $mangerResidence): static
-    {
-        if ($this->mangerResidences->removeElement($mangerResidence)) {
-            // set the owning side to null (unless already changed)
-            if ($mangerResidence->getManagerId() === $this) {
-                $mangerResidence->setManagerId(null);
-            }
-        }
+    // public function removeMangerResidence(MangerResidence $mangerResidence): static
+    // {
+    //     if ($this->mangerResidences->removeElement($mangerResidence)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($mangerResidence->getManagerId() === $this) {
+    //             $mangerResidence->setManagerId(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }

@@ -22,7 +22,7 @@ class MangerResidence
 
     #[ORM\ManyToOne(inversedBy: 'mangerResidences')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?propertymanger $manager_id = null;
+    private ?propertymanger $manager = null;
 
     #[ORM\ManyToOne(inversedBy: 'mangerResidences')]
     private ?residence $residence_id = null;
@@ -58,12 +58,12 @@ class MangerResidence
 
     public function getManagerId(): ?propertymanger
     {
-        return $this->manager_id;
+        return $this->manager;
     }
 
-    public function setManagerId(?propertymanger $manager_id): static
+    public function setManagerId(?propertymanger $manager): static
     {
-        $this->manager_id = $manager_id;
+        $this->manager = $manager;
 
         return $this;
     }

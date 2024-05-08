@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\ResidentRepository;
-use App\Entity\Resident;
+use App\Entity\resident;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -19,14 +19,14 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class ResidentController extends AbstractController
 {
     #[Route('/', name: 'app_resident')]
-    public function index(ResidentRepository $residentRepository): Response
+    public function getResidents(ResidentRepository $residentRepository): Response
     {     
            return $this->json($residentRepository->findAll(),JsonResponse::HTTP_OK);
     }
     #[Route('/new', name: 'app_resident_new', methods: [ 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,SerializerInterface $serializer,
+    public function addResident(Request $request, EntityManagerInterface $entityManager,SerializerInterface $serializer,
     UrlGeneratorInterface $urlGenerator,UserPasswordHasherInterface $hasher)
-    {try {
+    {
         $resident = $serializer->deserialize($request->getContent(), Resident::class, 'json');
     
         $hashedPassword = $hasher->hashPassword($resident, $resident->getPassword());
@@ -38,20 +38,17 @@ class ResidentController extends AbstractController
         $jsonResident = $serializer->serialize($resident, 'json', ['groups' => 'getResidents']);
         
         return $this->json($resident, JsonResponse::HTTP_CREATED);
-    } catch (\Throwable $th) {
-        return $this->json($th,JsonResponse::HTTP_BAD_REQUEST);
-
-    }
+   
         
 
     }
     #[Route('/{id}', name: 'app_resident_show', methods: ['GET'])]
-    public function show(Resident $resident): Response
+    public function finResident(Resident $resident): Response
     {
         return $this->json($resident,JsonResponse::HTTP_OK);
     }
         #[Route('/{id}/edit', name: 'app_resident_edit', methods: ['Put'])]
-    public function edit(Request $request, Resident $resident,
+    public function updateResident(Request $request, Resident $resident,
      EntityManagerInterface $entityManager,
      SerializerInterface $serializer,
      )
@@ -73,7 +70,7 @@ class ResidentController extends AbstractController
 
     }
     #[Route('/delete/{id}', name: 'app_resident_delete', methods: ['DELETE'])]
-    public function delete(Request $request, Resident $resident, EntityManagerInterface $entityManager): JsonResponse
+    public function deleteResident(Request $request, Resident $resident, EntityManagerInterface $entityManager): JsonResponse
     {
             $entityManager->remove($resident);
             $entityManager->flush();

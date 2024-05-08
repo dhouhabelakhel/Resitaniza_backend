@@ -52,30 +52,30 @@ class Resident implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $phonenumber = null;
 
-    /**
-     * @var Collection<int, Occupation>
-     */
-    #[ORM\ManyToMany(targetEntity: Occupation::class, mappedBy: 'resident_id')]
-    private Collection $occupations;
+    // /**
+    //  * @var Collection<int, Occupation>
+    //  */
+    // #[ORM\ManyToMany(targetEntity: Occupation::class, mappedBy: 'resident_id')]
+    // private Collection $occupations;
 
-    /**
-     * @var Collection<int, DemandeService>
-     */
-    #[ORM\OneToMany(targetEntity: DemandeService::class, mappedBy: 'resident_id', orphanRemoval: true)]
-    private Collection $demandeServices;
+    // /**
+    //  * @var Collection<int, DemandeService>
+    //  */
+    // #[ORM\OneToMany(targetEntity: DemandeService::class, mappedBy: 'resident_id', orphanRemoval: true)]
+    // private Collection $demandeServices;
 
-    /**
-     * @var Collection<int, Review>
-     */
-    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'resident_id', orphanRemoval: true)]
-    private Collection $reviews;
+    // /**
+    //  * @var Collection<int, Review>
+    //  */
+    // #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'resident_id', orphanRemoval: true)]
+    // private Collection $reviews;
 
-    public function __construct()
-    {
-        $this->occupations = new ArrayCollection();
-        $this->demandeServices = new ArrayCollection();
-        $this->reviews = new ArrayCollection();
-    }
+    // public function __construct()
+    // {
+    //     $this->occupations = new ArrayCollection();
+    //     $this->demandeServices = new ArrayCollection();
+    //     $this->reviews = new ArrayCollection();
+    // }
 
     public function getId(): ?int
     {
@@ -220,90 +220,90 @@ $this->id=$id;
         return $this;
     }
 
-    /**
-     * @return Collection<int, Occupation>
-     */
-    public function getOccupations(): Collection
-    {
-        return $this->occupations;
-    }
+    // /**
+    //  * @return Collection<int, Occupation>
+    //  */
+    // public function getOccupations(): Collection
+    // {
+    //     return $this->occupations;
+    // }
 
-    public function addOccupation(Occupation $occupation): static
-    {
-        if (!$this->occupations->contains($occupation)) {
-            $this->occupations->add($occupation);
-            $occupation->addResidentId($this);
-        }
+    // public function addOccupation(Occupation $occupation): static
+    // {
+    //     if (!$this->occupations->contains($occupation)) {
+    //         $this->occupations->add($occupation);
+    //         $occupation->addResidentId($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeOccupation(Occupation $occupation): static
-    {
-        if ($this->occupations->removeElement($occupation)) {
-            $occupation->removeResidentId($this);
-        }
+    // public function removeOccupation(Occupation $occupation): static
+    // {
+    //     if ($this->occupations->removeElement($occupation)) {
+    //         $occupation->removeResidentId($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    /**
-     * @return Collection<int, DemandeService>
-     */
-    public function getDemandeServices(): Collection
-    {
-        return $this->demandeServices;
-    }
+    // /**
+    //  * @return Collection<int, DemandeService>
+    //  */
+    // public function getDemandeServices(): Collection
+    // {
+    //     return $this->demandeServices;
+    // }
 
-    public function addDemandeService(DemandeService $demandeService): static
-    {
-        if (!$this->demandeServices->contains($demandeService)) {
-            $this->demandeServices->add($demandeService);
-            $demandeService->setResidentId($this);
-        }
+    // public function addDemandeService(DemandeService $demandeService): static
+    // {
+    //     if (!$this->demandeServices->contains($demandeService)) {
+    //         $this->demandeServices->add($demandeService);
+    //         $demandeService->setResidentId($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeDemandeService(DemandeService $demandeService): static
-    {
-        if ($this->demandeServices->removeElement($demandeService)) {
-            // set the owning side to null (unless already changed)
-            if ($demandeService->getResidentId() === $this) {
-                $demandeService->setResidentId(null);
-            }
-        }
+    // public function removeDemandeService(DemandeService $demandeService): static
+    // {
+    //     if ($this->demandeServices->removeElement($demandeService)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($demandeService->getResidentId() === $this) {
+    //             $demandeService->setResidentId(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    /**
-     * @return Collection<int, Review>
-     */
-    public function getReviews(): Collection
-    {
-        return $this->reviews;
-    }
+    // /**
+    //  * @return Collection<int, Review>
+    //  */
+    // public function getReviews(): Collection
+    // {
+    //     return $this->reviews;
+    // }
 
-    public function addReview(Review $review): static
-    {
-        if (!$this->reviews->contains($review)) {
-            $this->reviews->add($review);
-            $review->setResidentId($this);
-        }
+    // public function addReview(Review $review): static
+    // {
+    //     if (!$this->reviews->contains($review)) {
+    //         $this->reviews->add($review);
+    //         $review->setResidentId($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeReview(Review $review): static
-    {
-        if ($this->reviews->removeElement($review)) {
-            // set the owning side to null (unless already changed)
-            if ($review->getResidentId() === $this) {
-                $review->setResidentId(null);
-            }
-        }
+    // public function removeReview(Review $review): static
+    // {
+    //     if ($this->reviews->removeElement($review)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($review->getResidentId() === $this) {
+    //             $review->setResidentId(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }
