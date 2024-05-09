@@ -79,7 +79,7 @@ if($provider){
         Request $request,
         ?Provider $provider,
         EntityManagerInterface $entityManager,
-        SerializerInterface $serializer,
+        SerializerInterface $serializer
     ) {
 if($provider){
     $updatedprovider = $serializer->deserialize(

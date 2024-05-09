@@ -35,7 +35,6 @@ class ResidentController extends AbstractController
         $entityManager->persist($resident);
         $entityManager->flush();
     
-        $jsonResident = $serializer->serialize($resident, 'json', ['groups' => 'getResidents']);
         
         return $this->json($resident, JsonResponse::HTTP_CREATED);
    

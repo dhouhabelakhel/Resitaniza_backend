@@ -18,16 +18,16 @@ class Service
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    /**
-     * @var Collection<int, OfferService>
-     */
-    #[ORM\OneToMany(targetEntity: OfferService::class, mappedBy: 'service')]
-    private Collection $offerServices;
+    // /**
+    //  * @var Collection<int, OfferService>
+    //  */
+    // #[ORM\OneToMany(targetEntity: OfferService::class, mappedBy: 'service')]
+    // private Collection $offerServices;
 
-    public function __construct()
-    {
-        $this->offerServices = new ArrayCollection();
-    }
+    // public function __construct()
+    // {
+    //     $this->offerServices = new ArrayCollection();
+    // }
 
     public function getId(): ?int
     {
@@ -46,33 +46,33 @@ class Service
         return $this;
     }
 
-    /**
-     * @return Collection<int, OfferService>
-     */
-    public function getOfferServices(): Collection
-    {
-        return $this->offerServices;
-    }
+    // /**
+    //  * @return Collection<int, OfferService>
+    //  */
+    // public function getOfferServices(): Collection
+    // {
+    //     return $this->offerServices;
+    // }
 
-    public function addOfferService(OfferService $offerService): static
-    {
-        if (!$this->offerServices->contains($offerService)) {
-            $this->offerServices->add($offerService);
-            $offerService->setService($this);
-        }
+    // public function addOfferService(OfferService $offerService): static
+    // {
+    //     if (!$this->offerServices->contains($offerService)) {
+    //         $this->offerServices->add($offerService);
+    //         $offerService->setService($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeOfferService(OfferService $offerService): static
-    {
-        if ($this->offerServices->removeElement($offerService)) {
-            // set the owning side to null (unless already changed)
-            if ($offerService->getService() === $this) {
-                $offerService->setService(null);
-            }
-        }
+    // public function removeOfferService(OfferService $offerService): static
+    // {
+    //     if ($this->offerServices->removeElement($offerService)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($offerService->getService() === $this) {
+    //             $offerService->setService(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }
