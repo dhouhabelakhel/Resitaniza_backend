@@ -21,17 +21,17 @@ class OfferService
     #[ORM\Column]
     private ?float $price = null;
 
-    /**
-     * @var Collection<int, DemandeService>
-     */
-    #[ORM\OneToMany(targetEntity: DemandeService::class, mappedBy: 'offer_service_id')]
-    private Collection $demandeServices;
+    // /**
+    //  * @var Collection<int, DemandeService>
+    //  */
+    // #[ORM\OneToMany(targetEntity: DemandeService::class, mappedBy: 'offer_service')]
+    // private Collection $demandeServices;
 
-    /**
-     * @var Collection<int, Review>
-     */
-    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'offer_service_id')]
-    private Collection $reviews;
+    // /**
+    //  * @var Collection<int, Review>
+    //  */
+    // #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'offer_service')]
+    // private Collection $reviews;
 
     #[ORM\ManyToOne(inversedBy: 'offerServices')]
     #[ORM\JoinColumn(nullable: false)]
@@ -41,11 +41,11 @@ class OfferService
     #[ORM\JoinColumn(nullable: false)]
     private ?service $service = null;
 
-    public function __construct()
-    {
-        $this->demandeServices = new ArrayCollection();
-        $this->reviews = new ArrayCollection();
-    }
+    // public function __construct()
+    // {
+    //     $this->demandeServices = new ArrayCollection();
+    //     $this->reviews = new ArrayCollection();
+    // }
 
     public function getId(): ?int
     {
@@ -76,65 +76,65 @@ class OfferService
         return $this;
     }
 
-    /**
-     * @return Collection<int, DemandeService>
-     */
-    public function getDemandeServices(): Collection
-    {
-        return $this->demandeServices;
-    }
+    // /**
+    //  * @return Collection<int, DemandeService>
+    //  */
+    // public function getDemandeServices(): Collection
+    // {
+    //     return $this->demandeServices;
+    // }
 
-    public function addDemandeService(DemandeService $demandeService): static
-    {
-        if (!$this->demandeServices->contains($demandeService)) {
-            $this->demandeServices->add($demandeService);
-            $demandeService->setOfferServiceId($this);
-        }
+    // public function addDemandeService(DemandeService $demandeService): static
+    // {
+    //     if (!$this->demandeServices->contains($demandeService)) {
+    //         $this->demandeServices->add($demandeService);
+    //         $demandeService->setOfferServiceId($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeDemandeService(DemandeService $demandeService): static
-    {
-        if ($this->demandeServices->removeElement($demandeService)) {
-            // set the owning side to null (unless already changed)
-            if ($demandeService->getOfferServiceId() === $this) {
-                $demandeService->setOfferServiceId(null);
-            }
-        }
+    // public function removeDemandeService(DemandeService $demandeService): static
+    // {
+    //     if ($this->demandeServices->removeElement($demandeService)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($demandeService->getOfferServiceId() === $this) {
+    //             $demandeService->setOfferServiceId(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    /**
-     * @return Collection<int, Review>
-     */
-    public function getReviews(): Collection
-    {
-        return $this->reviews;
-    }
+    // /**
+    //  * @return Collection<int, Review>
+    //  */
+    // public function getReviews(): Collection
+    // {
+    //     return $this->reviews;
+    // }
 
-    public function addReview(Review $review): static
-    {
-        if (!$this->reviews->contains($review)) {
-            $this->reviews->add($review);
-            $review->setOfferServiceId($this);
-        }
+    // public function addReview(Review $review): static
+    // {
+    //     if (!$this->reviews->contains($review)) {
+    //         $this->reviews->add($review);
+    //         $review->setOfferServiceId($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeReview(Review $review): static
-    {
-        if ($this->reviews->removeElement($review)) {
-            // set the owning side to null (unless already changed)
-            if ($review->getOfferServiceId() === $this) {
-                $review->setOfferServiceId(null);
-            }
-        }
+    // public function removeReview(Review $review): static
+    // {
+    //     if ($this->reviews->removeElement($review)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($review->getOfferServiceId() === $this) {
+    //             $review->setOfferServiceId(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getProvider(): ?provider
     {

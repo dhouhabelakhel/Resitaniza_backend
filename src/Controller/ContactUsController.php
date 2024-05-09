@@ -24,7 +24,7 @@ class ContactUsController extends AbstractController
         $email = (new Email())
             ->from($data['email'])
             ->to('dhouhabelakhel2001@gmail.com')
-            ->subject('New Contact Message')
+            ->subject($data['subject'])
             ->text($data['message']);
 
         $mailer->send($email);

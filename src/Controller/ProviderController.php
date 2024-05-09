@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\OfferService;
 use App\Entity\Provider;
 use App\Entity\Service;
 use App\Repository\ProviderRepository;
@@ -12,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -50,7 +50,14 @@ class ProviderController extends AbstractController
                     $service->setName($serviceData['name']);
                     $entityManager->persist($service);
                 }
-            }
+            $offer=new OfferService();
+            $offer->setDescription($serviceData['description']);
+            $offer->setPrice($serviceData['price']);
+            $offer->setProvider($provider);
+            $offer->setService($service);
+            $entityManager->persist($offer);
+
+        }
 
             $entityManager->flush();
             return $this->json($provider, JsonResponse::HTTP_CREATED);

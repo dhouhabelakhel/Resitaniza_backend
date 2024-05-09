@@ -22,11 +22,11 @@ class DemandeService
 
     #[ORM\ManyToOne(inversedBy: 'demandeServices')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?resident $resident_id = null;
+    private ?resident $resident = null;
 
     #[ORM\ManyToOne(inversedBy: 'demandeServices')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?offerservice $offer_service_id = null;
+    private ?offerservice $offer_service = null;
 
     public function getId(): ?int
     {
@@ -59,24 +59,24 @@ class DemandeService
 
     public function getResidentId(): ?resident
     {
-        return $this->resident_id;
+        return $this->resident;
     }
 
-    public function setResidentId(?resident $resident_id): static
+    public function setResidentId(?resident $resident): static
     {
-        $this->resident_id = $resident_id;
+        $this->resident = $resident;
 
         return $this;
     }
 
     public function getOfferServiceId(): ?offerservice
     {
-        return $this->offer_service_id;
+        return $this->offer_service;
     }
 
     public function setOfferServiceId(?offerservice $offer_service_id): static
     {
-        $this->offer_service_id = $offer_service_id;
+        $this->offer_service = $offer_service_id;
 
         return $this;
     }

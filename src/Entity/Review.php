@@ -21,7 +21,7 @@ class Review
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?resident $resident_id = null;
+    private ?resident $resident = null;
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
@@ -58,12 +58,12 @@ class Review
 
     public function getResidentId(): ?resident
     {
-        return $this->resident_id;
+        return $this->resident;
     }
 
-    public function setResidentId(?resident $resident_id): static
+    public function setResidentId(?resident $resident): static
     {
-        $this->resident_id = $resident_id;
+        $this->resident = $resident;
 
         return $this;
     }

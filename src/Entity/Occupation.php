@@ -23,15 +23,15 @@ class Occupation
      * @var Collection<int, resident>
      */
     #[ORM\ManyToMany(targetEntity: resident::class, inversedBy: 'occupations')]
-    private Collection $resident_id;
+    private Collection $resident;
 
     #[ORM\ManyToOne(inversedBy: 'occupations')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?appartment $appartement_id = null;
+    private ?appartment $appartement = null;
 
     public function __construct()
     {
-        $this->resident_id = new ArrayCollection();
+        $this->resident = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -56,13 +56,13 @@ class Occupation
      */
     public function getResidentId(): Collection
     {
-        return $this->resident_id;
+        return $this->resident;
     }
 
     public function addResidentId(resident $residentId): static
     {
-        if (!$this->resident_id->contains($residentId)) {
-            $this->resident_id->add($residentId);
+        if (!$this->resident->contains($residentId)) {
+            $this->resident->add($residentId);
         }
 
         return $this;
@@ -70,19 +70,19 @@ class Occupation
 
     public function removeResidentId(resident $residentId): static
     {
-        $this->resident_id->removeElement($residentId);
+        $this->resident->removeElement($residentId);
 
         return $this;
     }
 
     public function getAppartementId(): ?appartment
     {
-        return $this->appartement_id;
+        return $this->appartement;
     }
 
     public function setAppartementId(?appartment $appartement_id): static
     {
-        $this->appartement_id = $appartement_id;
+        $this->appartement = $appartement_id;
 
         return $this;
     }
