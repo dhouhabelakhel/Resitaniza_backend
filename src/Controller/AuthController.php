@@ -15,44 +15,47 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-use Doctrine\Persistence\ManagerRegistry; 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 class AuthController extends AbstractController
 {
     private $jwtManager;
-    private $doctrine; 
-    private $passwordEncoder; 
+    private $doctrine;
+    private $passwordEncoder;
     private $tokenStorage;
 
-    public function __construct( TokenStorageInterface $tokenStorage,JWTTokenManagerInterface $jwtManager,ManagerRegistry $doctrine,        UserPasswordHasherInterface $passwordHasher
-    )
-    {        $this->tokenStorage = $tokenStorage;
+    public function __construct(
+        TokenStorageInterface $tokenStorage,
+        JWTTokenManagerInterface $jwtManager,
+        ManagerRegistry $doctrine,
+        UserPasswordHasherInterface $passwordHasher
+    ) {
+        $this->tokenStorage = $tokenStorage;
 
         $this->jwtManager = $jwtManager;
-        $this->doctrine=$doctrine;
+        $this->doctrine = $doctrine;
         $this->passwordEncoder = $passwordHasher;
-
     }
-//     #[Route('/testauth', name: 'app_testauth',methods: [ 'POST'])]
-// public function testauth(Request $req){
-//     $credentials = json_decode($req->getContent(), true);
-//     $userRole = $this->getUserRoleByEmail($credentials['email']);
-//     $user =$this->doctrine->getRepository('App\Entity\\' . ucfirst($userRole))
-//     ->findOneBy(['email' => $credentials['email']]);
-//    $test= $this->isNotValidPassword($user, $credentials['password'],$userRole,$credentials['email']);
-//    $newuser=new Resident();
+    //     #[Route('/testauth', name: 'app_testauth',methods: [ 'POST'])]
+    // public function testauth(Request $req){
+    //     $credentials = json_decode($req->getContent(), true);
+    //     $userRole = $this->getUserRoleByEmail($credentials['email']);
+    //     $user =$this->doctrine->getRepository('App\Entity\\' . ucfirst($userRole))
+    //     ->findOneBy(['email' => $credentials['email']]);
+    //    $test= $this->isNotValidPassword($user, $credentials['password'],$userRole,$credentials['email']);
+    //    $newuser=new Resident();
 
-//    $data = [
-//        'id' => $user->getId(),
-//        'email' => $user->getEmail(),
-//        'role' => $userRole
-//    ];
-//    $newuser->setId($data['id']);
-// return $this->json($newuser->getId());
-// }
-    #[Route('/auth', name: 'app_auth',methods: [ 'POST'])]
+    //    $data = [
+    //        'id' => $user->getId(),
+    //        'email' => $user->getEmail(),
+    //        'role' => $userRole
+    //    ];
+    //    $newuser->setId($data['id']);
+    // return $this->json($newuser->getId());
+    // }
+    #[Route('/auth', name: 'app_auth', methods: ['POST'])]
 
     public function login(Request $request): JsonResponse
     {
@@ -68,16 +71,14 @@ class AuthController extends AbstractController
             return new JsonResponse(['error' => 'User not found'], JsonResponse::HTTP_NOT_FOUND);
         }
 
-        $user =$this->doctrine->getRepository('App\Entity\\' . ucfirst($userRole))
+        $user = $this->doctrine->getRepository('App\Entity\\' . ucfirst($userRole))
             ->findOneBy(['email' => $credentials['email']]);
 
-        if (!$user || $this->isNotValidPassword($user, $credentials['password'],$userRole,$credentials['email'])) {
+        if (!$user || $this->isNotValidPassword($user, $credentials['password'], $userRole, $credentials['email'])) {
             return new JsonResponse(['error' => 'invalid password'], JsonResponse::HTTP_NOT_FOUND);
-
-        
         }
 
-        $token = $this->jwtManager->create($user,$user->getEmail());
+        $token = $this->jwtManager->create($user, $user->getEmail());
 
         return new JsonResponse(['token' => $token]);
     }
@@ -101,7 +102,7 @@ class AuthController extends AbstractController
 
         return null;
     }
-    private function isNotValidPassword(UserInterface $user, string $password,$userType,$email): bool
+    private function isNotValidPassword(UserInterface $user, string $password, $userType, $email): bool
     {
         switch ($userType) {
             case 'Resident':
@@ -116,14 +117,15 @@ class AuthController extends AbstractController
             default:
                 return new JsonResponse(['error' => 'Invalid user type'], JsonResponse::HTTP_BAD_REQUEST);
         }
-        
-      return  $isPasswordValid = $this->passwordEncoder->isPasswordValid($user, $password);    }
-      #[Route('/logout', name: 'app_logout',methods: [ 'POST'])]
 
-      public function logout(): Response
-      {
-          $this->tokenStorage->setToken(null);
-  
-          return $this->json('logout!!',JsonResponse::HTTP_OK);
-      }
+        return  $isPasswordValid = $this->passwordEncoder->isPasswordValid($user, $password);
     }
+    #[Route('/logout', name: 'app_logout', methods: ['POST'])]
+
+    public function logout(): Response
+    {
+        $this->tokenStorage->setToken(null);
+
+        return $this->json('logout!!', JsonResponse::HTTP_OK);
+    }
+}
