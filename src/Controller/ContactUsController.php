@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ContactUsController extends AbstractController
 {
-    #[Route('/contact_us', name: 'app_contact_us',methods:['POST'])]
+    #[Route('/api/contact_us', name: 'app_contact_us',methods:['POST'])]
     public function sendEmail(Request $request, MailerInterface $mailer): JsonResponse
     {
         $data = json_decode($request->getContent(), true);

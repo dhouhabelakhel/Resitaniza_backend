@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-#[Route('/Api/provider')]
+#[Route('/api/provider')]
 
 class ProviderController extends AbstractController
 {

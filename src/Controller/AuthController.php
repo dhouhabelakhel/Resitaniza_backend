@@ -55,7 +55,7 @@ class AuthController extends AbstractController
     //    $newuser->setId($data['id']);
     // return $this->json($newuser->getId());
     // }
-    #[Route('/auth', name: 'app_auth', methods: ['POST'])]
+    #[Route('/api/auth', name: 'app_auth', methods: ['POST'])]
 
     public function login(Request $request): JsonResponse
     {

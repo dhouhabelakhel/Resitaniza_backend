@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-#[Route('/Api/resident')]
+#[Route('/api/resident')]
 class ResidentController extends AbstractController
 {
     #[Route('/', name: 'app_resident')]

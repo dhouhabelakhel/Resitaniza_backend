@@ -14,7 +14,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
-#[Route('/Api/Service')]
+#[Route('/api/Service')]
 
 class ServiceController extends AbstractController
 {
@@ -44,7 +44,7 @@ class ServiceController extends AbstractController
         ]
     ]);
     }
-    #[Route('/add', name: 'add_service',methods:['Post'])]
+    #[Route('/', name: 'add_service',methods:['Post'])]
  public function addService(Request $request,ServiceRepository $service,EntityManagerInterface $entityManager, SerializerInterface $serializer):JsonResponse{
     $newservice = $serializer->deserialize($request->getContent(), Service::class, 'json');
     $existedService=$service->findOneBy(['name'=>$newservice->getName()]);
@@ -66,7 +66,7 @@ public function getServiceById(? Service $service):JsonResponse{
         }else  return $this->json("Service not found",  JsonResponse::HTTP_NOT_FOUND);
 
 }
-#[Route('/edit/{id}', name: 'edit_service',methods:['PUT'])]
+#[Route('/{id}', name: 'edit_service',methods:['PUT'])]
 public function editService(?Service $service,Request $request, SerializerInterface $serializer,EntityManagerInterface $entityManager)
 {
     if ($service) {      
@@ -87,7 +87,7 @@ public function editService(?Service $service,Request $request, SerializerInterf
     }
 }
 
-#[Route('/delete/{id}', name: 'delete_service',methods:['DELETE'])]
+#[Route('/{id}', name: 'delete_service',methods:['DELETE'])]
 public function deleteService(?Service $service,EntityManagerInterface $entityManager):JsonResponse{
     if($service){
         $entityManager->remove($service);
