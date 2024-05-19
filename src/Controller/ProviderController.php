@@ -26,7 +26,7 @@ class ProviderController extends AbstractController
     {
         return $this->json($providerRepository->findAll(), JsonResponse::HTTP_OK);
     }
-    #[Route('/new', name: 'app_provider_new', methods: ['POST'])]
+    #[Route('/', name: 'app_provider_new', methods: ['POST'])]
     public function new(
         Request $request,
         EntityManagerInterface $entityManager,
@@ -74,7 +74,7 @@ if($provider){
   
 }
     }
-    #[Route('/{id}/edit', name: 'app_provider_edit', methods: ['Put'])]
+    #[Route('/{id}', name: 'app_provider_edit', methods: ['Put'])]
     public function edit(
         Request $request,
         ?Provider $provider,
@@ -95,7 +95,7 @@ if($provider){
 }else return $this->json("Not found", JsonResponse::HTTP_NOT_FOUND);
        
     }
-    #[Route('/delete/{id}', name: 'app_provider_delete', methods: ['DELETE'])]
+    #[Route('/{id}', name: 'app_provider_delete', methods: ['DELETE'])]
     public function delete( ?Provider $provider, EntityManagerInterface $entityManager): JsonResponse
     {if ($provider){
 

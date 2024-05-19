@@ -22,7 +22,7 @@ class BlocController extends AbstractController
         return $this->json($blocRepository->findAll(), JsonResponse::HTTP_OK);
     }
     #[Route('/', name: 'create_bloc', methods: ['POST'])]
-    public function create(
+    public function addBloc(
         Request $request,
         EntityManagerInterface $entityManager,
         SerializerInterface $serializer,

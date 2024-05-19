@@ -19,7 +19,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[Route('/Api/PropertyManger')]
+#[Route('/api/PropertyManger')]
 
 class PropertyMangerController extends AbstractController
 {
@@ -28,8 +28,8 @@ class PropertyMangerController extends AbstractController
     {
         return $this->json($propertyManger->findAll(), JsonResponse::HTTP_OK);
     }
-    #[Route('/new', name: 'app_manger_new', methods: ['POST'])]
-    public function new(ValidatorInterface $validator,PropertyMangerRepository $manger, Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer, UserPasswordHasherInterface $hasher)
+    #[Route('/', name: 'app_manger_new', methods: ['POST'])]
+    public function addManger(ValidatorInterface $validator,PropertyMangerRepository $manger, Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer, UserPasswordHasherInterface $hasher)
     {   $newmanger = $serializer->deserialize($request->getContent(), PropertyManger::class, 'json');
         $existedemail = $manger->findOneBy(['email' => $newmanger->getEmail()]);
         $existedcin = $manger->findOneBy(['cin' => $newmanger->getCin()]);
@@ -77,7 +77,7 @@ class PropertyMangerController extends AbstractController
 
     }else return $this->json("Not found", JsonResponse::HTTP_NOT_FOUND);
     }
-    #[Route('/{id}/edit', name: 'app_manger_edit', methods: ['Put'])]
+    #[Route('/{id}', name: 'app_manger_edit', methods: ['Put'])]
     public function edit(
         Request $request,
        ? PropertyManger $manger,
@@ -101,7 +101,7 @@ class PropertyMangerController extends AbstractController
 
 
 
-    #[Route('/delete/{id}', name: 'app_manger_delete', methods: ['DELETE'])]
+    #[Route('/{id}', name: 'app_manger_delete', methods: ['DELETE'])]
     public function delete(? PropertyManger $manger, EntityManagerInterface $entityManager): JsonResponse
     {if($manger){
         $entityManager->remove($manger);

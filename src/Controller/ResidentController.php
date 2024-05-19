@@ -24,7 +24,7 @@ class ResidentController extends AbstractController
     {
         return $this->json($residentRepository->findAll(), JsonResponse::HTTP_OK);
     }
-    #[Route('/new', name: 'app_resident_new', methods: ['POST'])]
+    #[Route('/', name: 'app_resident_new', methods: ['POST'])]
     public function addResident(ResidentRepository $resident, Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer, UserPasswordHasherInterface $hasher)
     {
         $newresident = $serializer->deserialize($request->getContent(), Resident::class, 'json');
@@ -48,7 +48,7 @@ class ResidentController extends AbstractController
 
         }else return $this->json("Not found", JsonResponse::HTTP_NOT_FOUND);
     }
-    #[Route('/{id}/edit', name: 'app_resident_edit', methods: ['Put'])]
+    #[Route('/{id}', name: 'app_resident_edit', methods: ['Put'])]
     public function updateResident(
         Request $request,
         ?Resident $resident,
@@ -69,7 +69,7 @@ class ResidentController extends AbstractController
            
         
     }
-    #[Route('/delete/{id}', name: 'app_resident_delete', methods: ['DELETE'])]
+    #[Route('/{id}', name: 'app_resident_delete', methods: ['DELETE'])]
     public function deleteResident(? Resident $resident, EntityManagerInterface $entityManager): JsonResponse
     {if ($resident){
 
