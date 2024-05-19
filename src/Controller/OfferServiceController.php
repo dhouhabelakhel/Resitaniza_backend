@@ -18,7 +18,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 
-#[Route('/Api/OfferService')]
+#[Route('/api/OfferService')]
 class OfferServiceController extends AbstractController
 {
     #[Route('/', name: 'app_offer_service', methods: ['GET'])]

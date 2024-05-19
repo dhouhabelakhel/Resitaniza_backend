@@ -17,6 +17,11 @@ class Review
     private ?string $content = null;
 
     #[ORM\Column]
+     /**
+    
+     * @Assert\NotBlank
+     * @Assert\Range(min=1, max=5)
+     */
     private ?int $stars = null;
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
