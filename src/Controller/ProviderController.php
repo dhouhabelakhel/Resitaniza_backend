@@ -21,7 +21,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class ProviderController extends AbstractController
 {
 
-    #[Route('/', name: 'app_provider')]
+    #[Route('/', name: 'app_provider',methods:['GET'])]
     public function index(ProviderRepository $providerRepository): Response
     {
         return $this->json($providerRepository->findAll(), JsonResponse::HTTP_OK);

@@ -74,7 +74,7 @@ class AuthController extends AbstractController
         $user = $this->doctrine->getRepository('App\Entity\\' . ucfirst($userRole))
             ->findOneBy(['email' => $credentials['email']]);
 
-        if (!$user || $this->isNotValidPassword($user, $credentials['password'], $userRole, $credentials['email'])) {
+        if (!$user || !$this->isNotValidPassword($user, $credentials['password'], $userRole, $credentials['email'])) {
             return new JsonResponse(['error' => 'invalid password'], JsonResponse::HTTP_NOT_FOUND);
         }
 

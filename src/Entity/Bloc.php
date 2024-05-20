@@ -22,7 +22,7 @@ class Bloc
 
     #[ORM\ManyToOne(inversedBy: 'blocs')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?residence $residence_id = null;
+    private ?residence $residence = null;
 
     /**
      * @var Collection<int, Appartment>
@@ -31,7 +31,7 @@ class Bloc
     private Collection $appartments;
 
     #[ORM\Column]
-    private ?int $floor = null;
+    private ?int $etage = null;
 
     public function __construct()
     {
@@ -60,12 +60,12 @@ class Bloc
 
     public function getResidenceId(): ?residence
     {
-        return $this->residence_id;
+        return $this->residence;
     }
 
-    public function setResidenceId(?residence $residence_id): static
+    public function setResidenceId(?residence $residence): static
     {
-        $this->residence_id = $residence_id;
+        $this->residence = $residence;
 
         return $this;
     }
@@ -102,12 +102,12 @@ class Bloc
 
     public function getFloor(): ?int
     {
-        return $this->floor;
+        return $this->etage;
     }
 
-    public function setFloor(int $floor): static
+    public function setFloor(int $etage): static
     {
-        $this->floor = $floor;
+        $this->etage = $etage;
 
         return $this;
     }

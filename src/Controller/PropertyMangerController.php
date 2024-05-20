@@ -28,7 +28,7 @@ class PropertyMangerController extends AbstractController
     {
         return $this->json($propertyManger->findAll(), JsonResponse::HTTP_OK);
     }
-    #[Route('/', name: 'app_manger_new', methods: ['POST'])]
+    #[Route('/new', name: 'app_manger_new', methods: ['POST'])]
     public function addManger(ValidatorInterface $validator,PropertyMangerRepository $manger, Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer, UserPasswordHasherInterface $hasher)
     {   $newmanger = $serializer->deserialize($request->getContent(), PropertyManger::class, 'json');
         $existedemail = $manger->findOneBy(['email' => $newmanger->getEmail()]);

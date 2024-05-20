@@ -17,8 +17,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route('/api/residence')]
 class ResidenceController extends AbstractController
 {    #[Route('/', name: 'all_residence',methods:['Get'])]
-public function getAll(ResidentRepository $residenceRepository){
-    return $this->json($residenceRepository->getAll(),JsonResponse::HTTP_OK);
+public function getAll(ResidenceRepository $residenceRepository){
+    return $this->json($residenceRepository->findAll(),JsonResponse::HTTP_OK);
 }
 
     #[Route('/', name: 'add_residence',methods:['POST'])]

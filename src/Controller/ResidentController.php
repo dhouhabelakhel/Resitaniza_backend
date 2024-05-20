@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 #[Route('/api/resident')]
 class ResidentController extends AbstractController
 {
-    #[Route('/', name: 'app_resident')]
+    #[Route('/', name: 'app_resident',methods:['GET'])]
     public function getResidents(ResidentRepository $residentRepository): Response
     {
         return $this->json($residentRepository->findAll(), JsonResponse::HTTP_OK);

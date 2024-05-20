@@ -23,7 +23,7 @@ class Appartment
 
     #[ORM\ManyToOne(inversedBy: 'appartments')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?bloc $bloc_id = null;
+    private ?bloc $bloc = null;
 
     /**
      * @var Collection<int, Occupation>
@@ -67,12 +67,12 @@ class Appartment
 
     public function getBlocId(): ?bloc
     {
-        return $this->bloc_id;
+        return $this->bloc;
     }
 
     public function setBlocId(?bloc $bloc_id): static
     {
-        $this->bloc_id = $bloc_id;
+        $this->bloc = $bloc_id;
 
         return $this;
     }

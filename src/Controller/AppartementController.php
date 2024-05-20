@@ -46,7 +46,7 @@ class AppartementController extends AbstractController
         return $this->json($apartment, JsonResponse::HTTP_CREATED);
     }
 
-    #[Route('/apartments/{id}', name: 'get_apartment', methods: ['GET'])]
+    #[Route('/{id}', name: 'get_apartment', methods: ['GET'])]
     public function get(?Appartment $apartment): JsonResponse {
         if($apartment){
             return $this->json($apartment,JsonResponse::HTTP_FOUND);
